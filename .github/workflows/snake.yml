@@ -13,6 +13,12 @@ on:
     branches:
       - main
 
+# Only one snake run at a time; a newer run cancels an in-flight one so the
+# `output` branch is never written by two jobs at once.
+concurrency:
+  group: snake-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
